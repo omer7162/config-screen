@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screen Dimension Monitor</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  #dimensionDisplay {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  .image-container img {
+    max-height: 200px;
+    max-width: 200px;
+    margin: 10px 0;
+  }
+  #adjustmentMessage {
+    font-size: 20px;
+    color: #fff;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div id="dimensionDisplay">Screen Dimensions: </div>
+<div id="adjustmentMessage"></div>
+
+<div class="image-container">
+  <img src="browser.png" alt="Browser Image">
+  <br>
+  <a href="browser.png" download="browser.png">Download Browser Image</a>
+</div>
+
+<div class="image-container">
+  <img src="cursor.png" alt="Cursor Image">
+  <br>
+  <a href="cursor.png" download="cursor.png">Download Cursor Image</a>
+</div>
+
+<script>
+  const targetRatio = 5.02 / 8.42;
+
+  function updateDimensions() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const ratio = height / width;
+    const adjustmentMessage = document.getElementById('adjustmentMessage');
+
+    document.getElementById('dimensionDisplay').textContent = `Screen Dimensions: ${height}px (H) x ${width}px (W)`;
+
+    if (ratio.toFixed(2) === targetRatio.toFixed(2)) {
+      document.body.style.backgroundColor = "green";
+      adjustmentMessage.textContent = "Aspect ratio is perfect!";
+    } else {
+      document.body.style.backgroundColor = "red";
+      if (ratio < targetRatio) {
+        adjustmentMessage.textContent = "Make the screen taller or less wide to fit the aspect ratio.";
+      } else {
+        adjustmentMessage.textContent = "Make the screen wider or less tall to fit the aspect ratio.";
+      }
+    }
+  }
+
+  window.onresize = updateDimensions;
+  window.onload = updateDimensions;
+</script>
+
+</body>
+</html>
